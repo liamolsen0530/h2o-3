@@ -126,13 +126,13 @@ public class FrameSplitterTest extends TestUtil {
     // Perform frame split via API
     try {
       SplitFrame sf = new SplitFrame(Key.make());
-      sf.dataset = f;
-      sf.ratios = new double[] { 0.5, 0.5 };
-      sf.destination_frames = new Key[] { Key.make("train.hex"), Key.make("test.hex")};
+      sf._dataset = f;
+      sf._ratios = new double[] { 0.5, 0.5 };
+      sf._destination_frames = new Key[] { Key.make("train.hex"), Key.make("test.hex")};
       // Invoke the job
       sf.exec().get();
       Assert.assertTrue("The job is not in DONE state, but in " + sf._state, sf.isDone());
-      Key[] ksplits = sf.destination_frames;
+      Key[] ksplits = sf._destination_frames;
       Frame[] fsplits = new Frame[ksplits.length];
       for (int i=0; i<ksplits.length; i++) fsplits[i] = DKV.get(ksplits[i]).get();
       Assert.assertEquals("Number of splits", 2, ksplits.length);

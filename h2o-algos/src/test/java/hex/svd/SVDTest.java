@@ -12,7 +12,6 @@ import water.Key;
 import water.Scope;
 import water.TestUtil;
 import water.fvec.Frame;
-import water.util.ArrayUtils;
 import water.util.FrameUtils;
 import water.util.Log;
 
@@ -255,13 +254,13 @@ public class SVDTest extends TestUtil {
     try {
       fr = parse_test_file("smalldata/iris/iris_wheader.csv");
       SplitFrame sf = new SplitFrame(Key.make());
-      sf.dataset = fr;
-      sf.ratios = new double[] { 0.5, 0.5 };
-      sf.destination_frames = new Key[] { Key.make("train.hex"), Key.make("test.hex")};
+      sf._dataset = fr;
+      sf._ratios = new double[] { 0.5, 0.5 };
+      sf._destination_frames = new Key[] { Key.make("train.hex"), Key.make("test.hex")};
 
       // Invoke the job
       sf.exec().get();
-      Key[] ksplits = sf.destination_frames;
+      Key[] ksplits = sf._destination_frames;
       tr = DKV.get(ksplits[0]).get();
       te = DKV.get(ksplits[1]).get();
 
