@@ -502,7 +502,9 @@ def save_model(model, dir="", name="", filename="", force=False):
 def load_model(path):
   """
   Load a saved H2O model from disk.
-  :param path: The full path of the H2O Model to be imported.
+  :param path: The full path of the H2O Model to be imported. For example, if the `dir` argument in h2o.saveModel was
+  set to "/Users/UserName/Desktop" then the `path` argument in h2o.loadModel should be set to something like
+  "/Users/UserName/Desktop/K-meansModel__a7cebf318ca5827185e209edf47c4052"
   :return: the model
   """
   if not isinstance(path, str): raise ValueError("`path` must be a non-empty character string")
@@ -671,6 +673,7 @@ def prcomp(x,validation_x=None,**kwargs):
   every categorical variable will be dropped. Defaults to FALSE.
   :return: a new dim reduction model
   """
+  kwargs['_rest_version'] = 99
   return h2o_model_builder.unsupervised_model_build(x,validation_x,"pca",kwargs)
 
 
@@ -694,6 +697,7 @@ def svd(x,validation_x=None,**kwargs):
   categorical variable will be dropped. Defaults to TRUE.
   :return: a new dim reduction model
   """
+  kwargs['_rest_version'] = 99
   return h2o_model_builder.unsupervised_model_build(x,validation_x,"svd",kwargs)
 
 

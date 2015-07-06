@@ -116,9 +116,7 @@ class H2OFrame:
     """
     # perform the parse setup
     setup = h2o.parse_setup(text_key)
-    # blocking parse, first line is always a header (since "we" wrote the data out)
-    parse = h2o.parse(setup, _py_tmp_key(), first_line_is_header=1)
-    # a hack to get the column names correct since "parse" does not provide them
+    parse = h2o.parse(setup, _py_tmp_key())
     self._computed=True
     self._id = parse["destination_frame"]["name"]
     self._ncols = parse["number_columns"]
@@ -576,6 +574,16 @@ class H2OFrame:
     """
     return H2OFrame(expr=ExprNode("cbind", False, self, data))
 
+  def rbind(self, data):
+    """
+    Combine H2O Datasets by Rows.
+    Takes a sequence of H2O data sets and combines them by rows.
+    :param data: an H2OFrame
+    :return: self, with data appended (row-wise)
+    """
+    if not isinstance(data, H2OFrame): raise ValueError("`data` must be an H2OFrame, but got {0}".format(type(data)))
+    return H2OFrame(expr=ExprNode("rbind", self, data))
+
   def split_frame(self, ratios=[0.75], destination_frames=""):
     """
     Split a frame into distinct subsets of size determined by the given ratios.
@@ -769,7 +777,7 @@ class H2OFrame:
 
     total = frame["counts"].sum()
     densities = [(frame["counts"][i,:]/total)._scalar()*(1/(frame["breaks"][i,:]._scalar()-frame["breaks"][i-1,:]._scalar())) for i in range(1,frame["counts"].nrow())]
-    densities.insert(0,float("nan"))
+    densities.insert(0,0)
     densities_frame = H2OFrame(python_obj=[[d] for d in densities])
     densities_frame.setNames(["density"])
     frame = frame.cbind(densities_frame)
@@ -943,7 +951,7 @@ class H2OFrame:
     :param seed: A random seed. If None, then one will be generated.
     :return: A new H2OVec filled with doubles sampled uniformly from [0,1).
     """
-    return H2OFrame(expr=ExprNode("h2o.runif", self, -1 if seed is None else random.randint(123456789, 999999999)))
+    return H2OFrame(expr=ExprNode("h2o.runif", self, -1 if seed is None else seed))
 
   def match(self, table, nomatch=0):
     """
