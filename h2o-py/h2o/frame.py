@@ -66,7 +66,7 @@ class H2OFrame:
     self._computed=True
     self._nrows = int(H2OFrame(expr=ExprNode("nrow", self))._scalar())
     self._ncols = parse["number_columns"]
-    self._col_names = parse['column_names'] if parse["column_names"] else ["C" + str(x) for x in range(1,self._ncols)]
+    self._col_names = parse['column_names'] if parse["column_names"] else ["C" + str(x) for x in range(1,self._ncols+1)]
     thousands_sep = h2o.H2ODisplay.THOUSANDS
     if isinstance(file_path, str): print "Imported {}. Parsed {} rows and {} cols".format(file_path,thousands_sep.format(self._nrows), thousands_sep.format(self._ncols))
     else:                          h2o.H2ODisplay([["File"+str(i+1),f] for i,f in enumerate(file_path)],None, "Parsed {} rows and {} cols".format(thousands_sep.format(self._nrows), thousands_sep.format(self._ncols)))
@@ -307,12 +307,12 @@ class H2OFrame:
     self._eager()
     nrows = min(self.nrow(), rows)
     ncols = min(self.ncol(), cols)
-    colnames = self.names()[0:ncols]
     start_idx = max(self.nrow()-nrows,0)
     tail = self[start_idx:(start_idx+nrows),:]
     res = tail.as_data_frame(False)
+    colnames = res.pop(0)
     print "Last {} rows and first {} columns: ".format(nrows,ncols)
-    h2o.H2ODisplay(res,["Row ID"]+colnames)
+    h2o.H2ODisplay(res,colnames)
     return tail
 
   def levels(self, col=None):
