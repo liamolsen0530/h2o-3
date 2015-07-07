@@ -714,7 +714,7 @@ public class RequestServer extends NanoHTTPD {
         throw H2O.fail("model key was found but model array is not length 1 (was " + mb.models.length + ")");
       }
       ModelSchema ms = (ModelSchema)mb.models[0];
-      Response r = new Response(http_response_header, null, ms.toJava(mb.preview));
+      Response r = new Response(http_response_header, MIME_DEFAULT_BINARY, ms.toJava(mb.preview));
       //r.addHeader("Content-Disposition", "attachment; filename=\"" + ms.model_id.key().toString() + ".java\"");
       return r;
     case html: {
