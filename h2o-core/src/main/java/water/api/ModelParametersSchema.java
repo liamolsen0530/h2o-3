@@ -20,7 +20,7 @@ public class ModelParametersSchema<P extends Model.Parameters, S extends ModelPa
   // NOTE:
   // Parameters must be ordered for the UI
   ////////////////////////////////////////
-  static public String[] own_fields = new String[] { "model_id", "training_frame", "validation_frame", "ignored_columns", "ignore_const_cols", "score_each_iteration" };
+    static public String[] own_fields = new String[] { "model_id", "training_frame", "validation_frame", "ignored_columns", "ignore_const_cols", "score_each_iteration" };
 
   /** List of fields in the order in which we want them serialized.  This is the order they will be presented in the UI.  */
   private transient String[] __fields_cache = null;
@@ -45,8 +45,27 @@ public class ModelParametersSchema<P extends Model.Parameters, S extends ModelPa
       catch (Exception e) {
         throw H2O.fail("Caught exception appending the schema field list for: " + this);
       }
+		  moveField(__fields_cache, "response_column", 3);	
     }
     return __fields_cache;
+  }
+
+  /**
+   * Helper function to move a field to a specified index. If the field name does not exist then nothing is done.
+   **/
+  protected void moveField(String[] arr, String field, int destIndex) {
+		int currIndex = 0;
+		while (currIndex < arr.length && !arr[currIndex].equals(field)) {
+			  currIndex += 1;
+		}
+		if (currIndex == arr.length) return;
+		String temp = arr[currIndex];
+		int shift = currIndex - destIndex < 0 ? 1 : -1;
+		while (currIndex != destIndex) {
+		  arr[currIndex] = arr[currIndex + shift];
+			currIndex += shift;
+		}
+		arr[destIndex] = temp;
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
