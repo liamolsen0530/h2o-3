@@ -20,12 +20,14 @@ public class ModelParametersSchema<P extends Model.Parameters, S extends ModelPa
   // NOTE:
   // Parameters must be ordered for the UI
   ////////////////////////////////////////
-    static public String[] own_fields = new String[] { "model_id", "training_frame", "validation_frame", "ignored_columns", "ignore_const_cols", "score_each_iteration" };
+    //static public String[] own_fields = new String[] { "model_id", "training_frame", "validation_frame", "ignored_columns", "ignore_const_cols", "score_each_iteration" };
 
   /** List of fields in the order in which we want them serialized.  This is the order they will be presented in the UI.  */
   private transient String[] __fields_cache = null;
 
-  public String[] fields() {
+
+		public String[] fields() {return null;}
+		/*public String[] fields() {
     if (null == __fields_cache) {
       __fields_cache = new String[0];
       Class<? extends ModelParametersSchema> this_clz = this.getClass();
@@ -38,35 +40,17 @@ public class ModelParametersSchema<P extends Model.Parameters, S extends ModelPa
           System.arraycopy(fields, 0, tmp, 0, fields.length);
           System.arraycopy(__fields_cache, 0, tmp, fields.length, __fields_cache.length);
           __fields_cache = tmp;
-
+					System.out.println(clz);
           if (clz == ModelParametersSchema.class) break;
         }
       }
       catch (Exception e) {
         throw H2O.fail("Caught exception appending the schema field list for: " + this);
       }
-		  moveField(__fields_cache, "response_column", 3);	
     }
+		System.out.println("");
     return __fields_cache;
-  }
-
-  /**
-   * Helper function to move a field to a specified index. If the field name does not exist then nothing is done.
-   **/
-  protected void moveField(String[] arr, String field, int destIndex) {
-		int currIndex = 0;
-		while (currIndex < arr.length && !arr[currIndex].equals(field)) {
-			  currIndex += 1;
-		}
-		if (currIndex == arr.length) return;
-		String temp = arr[currIndex];
-		int shift = currIndex - destIndex < 0 ? 1 : -1;
-		while (currIndex != destIndex) {
-		  arr[currIndex] = arr[currIndex + shift];
-			currIndex += shift;
-		}
-		arr[destIndex] = temp;
-  }
+  }*/
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // CAREFUL: This class has its own JSON serializer.  If you add a field here you probably also want to add it to the serializer!
