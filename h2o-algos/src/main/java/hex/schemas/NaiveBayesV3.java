@@ -8,14 +8,14 @@ import water.api.ModelParametersSchema;
 
 public class NaiveBayesV3 extends ModelBuilderSchema<NaiveBayes,NaiveBayesV3,NaiveBayesV3.NaiveBayesParametersV3> {
   public static final class NaiveBayesParametersV3 extends ModelParametersSchema<NaiveBayesParameters, NaiveBayesParametersV3> {
-    static public String[] own_fields = new String[]{
+    static public String[] fields = new String[]{
 				"model_id",
 				"training_frame",
 				"validation_frame",
+				"response_column",
 				"ignored_columns",
 				"ignore_const_cols",
 				"score_each_iteration",
-				"response_column",
 				"balance_classes",
 				"class_sampling_factors",
 				"max_after_balance_size",
@@ -29,10 +29,6 @@ public class NaiveBayesV3 extends ModelBuilderSchema<NaiveBayes,NaiveBayesV3,Nai
 				"compute_metrics"
 		};
 
-		@Override
-		public String[] fields() {
-				return own_fields;
-		}
     // supervised Schema
 
     // TODO: pass these as a new helper class that contains frame and vec; right now we have no automagic way to

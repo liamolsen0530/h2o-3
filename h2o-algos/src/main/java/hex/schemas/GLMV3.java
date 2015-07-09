@@ -16,14 +16,14 @@ import water.api.ModelParametersSchema;
 public class GLMV3 extends ModelBuilderSchema<GLM,GLMV3,GLMV3.GLMParametersV3> {
 
   public static final class GLMParametersV3 extends ModelParametersSchema<GLMParameters, GLMParametersV3> {
-    static public String[] own_fields = new String[]{
+    static public String[] fields = new String[]{
 				"model_id",
 				"training_frame",
 				"validation_frame",
+				"response_column",
 				"ignored_columns",
 				"ignore_const_cols",
 				"score_each_iteration",
-				"response_column",
 				"offset_column",
 				"weights_column",
 				"family",
@@ -53,11 +53,6 @@ public class GLMV3 extends ModelBuilderSchema<GLM,GLMV3,GLMV3.GLMParametersV3> {
       "max_confusion_matrix_size",
       "max_hit_ratio_k",
     };
-
-		@Override
-		public String[] fields() {
-				return own_fields;
-		}
 
     @API(help = "Response column", is_member_of_frames = {"training_frame", "validation_frame"}, is_mutually_exclusive_with = {"ignored_columns"}, direction = API.Direction.INOUT)
     public ColSpecifierV3 response_column;

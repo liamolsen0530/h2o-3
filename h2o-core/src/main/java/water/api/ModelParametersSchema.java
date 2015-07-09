@@ -26,7 +26,15 @@ public class ModelParametersSchema<P extends Model.Parameters, S extends ModelPa
   private transient String[] __fields_cache = null;
 
 
-		public String[] fields() {return null;}
+		public String[] fields() {
+				Class<? extends ModelParametersSchema> this_clz = this.getClass();
+				try {
+				    return (String[]) this_clz.getField("fields").get(this_clz);
+				}
+				catch (Exception e) {
+						throw H2O.fail("Caught exception from accessing the schema field list for: " + this);
+				}
+		}
 		/*public String[] fields() {
     if (null == __fields_cache) {
       __fields_cache = new String[0];

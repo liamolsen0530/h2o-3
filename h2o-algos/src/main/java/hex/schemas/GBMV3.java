@@ -8,14 +8,14 @@ import water.api.API;
 public class GBMV3 extends SharedTreeV3<GBM,GBMV3,GBMV3.GBMParametersV3> {
 
   public static final class GBMParametersV3 extends SharedTreeV3.SharedTreeParametersV3<GBMParameters, GBMParametersV3> {
-    static public String[] own_fields = new String[] {
+    static public String[] fields = new String[] {
 				"model_id",
 				"training_frame",
 				"validation_frame",
+				"response_column",
 				"ignored_columns",
 				"ignore_const_cols",
 				"score_each_iteration",
-				"response_column",
 				"offset_column",
 				"weights_column",
 				"balance_classes",
@@ -34,11 +34,6 @@ public class GBMV3 extends SharedTreeV3<GBM,GBMV3,GBMV3.GBMParametersV3> {
         "learn_rate",
         "distribution"
     };
-
-		@Override
-		public String[] fields() {
-				return own_fields;
-		}
 
     // Input fields
     @API(help="Learning rate from 0.0 to 1.0", gridable = true)

@@ -10,7 +10,7 @@ import water.api.ModelParametersSchema;
 public class GLRMV99 extends ModelBuilderSchema<GLRM,GLRMV99,GLRMV99.GLRMParametersV99> {
 
   public static final class GLRMParametersV99 extends ModelParametersSchema<GLRMParameters, GLRMParametersV99> {
-    static public String[] own_fields = new String[] {
+    static public String[] fields = new String[] {
 				"model_id",
 				"training_frame",
 				"validation_frame",
@@ -33,11 +33,6 @@ public class GLRMV99 extends ModelBuilderSchema<GLRM,GLRMV99,GLRMV99.GLRMParamet
 				"user_points",
 				"recover_svd"
 		};
-
-		@Override
-		public String[] fields() {
-				return own_fields;
-		}
 
     @API(help = "Transformation of training data", values = { "NONE", "STANDARDIZE", "NORMALIZE", "DEMEAN", "DESCALE" })  // TODO: pull out of enum class
     public DataInfo.TransformType transform;

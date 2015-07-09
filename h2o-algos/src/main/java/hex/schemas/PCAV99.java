@@ -9,7 +9,7 @@ import water.api.ModelParametersSchema;
 public class PCAV99 extends ModelBuilderSchema<PCA,PCAV99,PCAV99.PCAParametersV99> {
 
   public static final class PCAParametersV99 extends ModelParametersSchema<PCAParameters, PCAParametersV99> {
-    static public String[] own_fields = new String[] {
+    static public String[] fields = new String[] {
 				"model_id",
 				"training_frame",
 				"validation_frame",
@@ -24,11 +24,6 @@ public class PCAV99 extends ModelBuilderSchema<PCA,PCAV99,PCAV99.PCAParametersV9
 				"loading_name",
 				"use_all_factor_levels"
 		};
-
-		@Override
-		public String[] fields() {
-				return own_fields;
-		}
 
     @API(help = "Transformation of training data", values = { "NONE", "STANDARDIZE", "NORMALIZE", "DEMEAN", "DESCALE" })  // TODO: pull out of enum class
     public DataInfo.TransformType transform;

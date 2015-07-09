@@ -12,16 +12,16 @@ public class DeepLearningV3 extends ModelBuilderSchema<DeepLearning,DeepLearning
   public static final class DeepLearningParametersV3 extends ModelParametersSchema<DeepLearningParameters, DeepLearningParametersV3> {
 
     // Determines the order of parameters in the GUI
-    static public String[] own_fields = new String[] {
+    static public String[] fields = new String[] {
 				"model_id",
 				"training_frame",
 				"validation_frame",
+				"response_column",
 				"ignored_columns",
 				"ignore_const_cols",
 				"score_each_iteration",
 //        "n_folds",
 //        "keep_cross_validation_splits",
-        "response_column",
         "weights_column",
         "offset_column",
         "balance_classes",
@@ -84,11 +84,6 @@ public class DeepLearningV3 extends ModelBuilderSchema<DeepLearning,DeepLearning
 //        "elastic_averaging_moving_rate",
 //        "elastic_averaging_regularization"
     };
-
-		@Override
-		public String[] fields() {
-				return own_fields;
-		}
 
     /// Supervised params
     // TODO: pass these as a new helper class that contains frame and vec; right now we have no automagic way to

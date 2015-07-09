@@ -7,14 +7,14 @@ import water.api.API;
 public class DRFV3 extends SharedTreeV3<DRF,DRFV3, DRFV3.DRFParametersV3> {
 
   public static final class DRFParametersV3 extends SharedTreeV3.SharedTreeParametersV3<DRFParameters, DRFParametersV3> {
-    static public String[] own_fields = new String[] {
+    static public String[] fields = new String[] {
 				"model_id",
 				"training_frame",
 				"validation_frame",
+				"response_column",
 				"ignored_columns",
 				"ignore_const_cols",
 				"score_each_iteration",
-				"response_column",
 				"offset_column",
 				"weights_column",
 				"balance_classes",
@@ -34,11 +34,6 @@ public class DRFV3 extends SharedTreeV3<DRF,DRFV3, DRFV3.DRFParametersV3> {
         "sample_rate",
         "binomial_double_trees"
     };
-
-		@Override
-		public String[] fields() {
-				return own_fields;
-		}
 
     // Input fields
     @API(help = "Number of variables randomly sampled as candidates at each split. If set to -1, defaults to sqrt{p} for classification and p/3 for regression (where p is the # of predictors", gridable = true)

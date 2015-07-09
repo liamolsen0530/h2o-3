@@ -9,7 +9,7 @@ import water.api.ModelParametersSchema;
 public class SVDV99 extends ModelBuilderSchema<SVD,SVDV99,SVDV99.SVDParametersV99> {
 
   public static final class SVDParametersV99 extends ModelParametersSchema<SVDModel.SVDParameters, SVDParametersV99> {
-    static public String[] own_fields = new String[] {
+    static public String[] fields = new String[] {
 				"model_id",
 				"training_frame",
 				"validation_frame",
@@ -25,10 +25,6 @@ public class SVDV99 extends ModelBuilderSchema<SVD,SVDV99,SVDV99.SVDParametersV9
 				"use_all_factor_levels"
 		};
 
-		@Override
-		public String[] fields() {
-				return own_fields;
-		}
 
     @API(help = "Transformation of training data", values = { "NONE", "STANDARDIZE", "NORMALIZE", "DEMEAN", "DESCALE" })  // TODO: pull out of enum class
     public DataInfo.TransformType transform;

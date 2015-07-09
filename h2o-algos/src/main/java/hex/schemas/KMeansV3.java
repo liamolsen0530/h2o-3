@@ -9,7 +9,7 @@ import water.api.KeyV3;
 public class KMeansV3 extends ClusteringModelBuilderSchema<KMeans,KMeansV3,KMeansV3.KMeansParametersV3> {
 
   public static final class KMeansParametersV3 extends ClusteringModelParametersSchema<KMeansParameters, KMeansParametersV3> {
-    static public String[] own_fields = new String[] {
+    static public String[] fields = new String[] {
 				"model_id",
 				"training_frame",
 				"validation_frame",
@@ -23,11 +23,6 @@ public class KMeansV3 extends ClusteringModelBuilderSchema<KMeans,KMeansV3,KMean
 				"seed",
 				"init"
 		};
-
-		@Override
-		public String[] fields() {
-				return own_fields;
-		}
 
     // Input fields
     @API(help = "User-specified points", required = false)
