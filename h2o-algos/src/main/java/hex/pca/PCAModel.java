@@ -6,7 +6,6 @@ import water.Key;
 import water.MRTask;
 import water.fvec.Chunk;
 import water.fvec.Frame;
-import water.fvec.Vec;
 import water.util.JCodeGen;
 import water.util.SB;
 import water.util.TwoDimTable;
@@ -23,6 +22,7 @@ public class PCAModel extends Model<PCAModel,PCAModel.PCAParameters,PCAModel.PCA
     public String _loading_name;
     public boolean _keep_loading = true;
     public boolean _use_all_factor_levels = false;   // When expanding categoricals, should first level be kept or dropped?
+    public boolean _compute_metrics = true;   // Should a second pass be made through data to compute metrics?
 
     public enum Method {
       GramSVD, Power, GLRM
@@ -83,7 +83,7 @@ public class PCAModel extends Model<PCAModel,PCAModel.PCAParameters,PCAModel.PCA
   }
 
   @Override
-  protected Frame scoreImpl(Frame orig, Frame adaptedFr, String destination_key) {
+  protected Frame predictScoreImpl(Frame orig, Frame adaptedFr, String destination_key) {
     Frame adaptFrm = new Frame(adaptedFr);
     for(int i = 0; i < _parms._k; i++)
       adaptFrm.add("PC"+String.valueOf(i+1),adaptFrm.anyVec().makeZero());
@@ -140,7 +140,7 @@ public class PCAModel extends Model<PCAModel,PCAModel.PCAParameters,PCAModel.PCA
   public Frame score(Frame fr, String destination_key) {
     Frame adaptFr = new Frame(fr);
     adaptTestForTrain(adaptFr, true, false);   // Adapt
-    Frame output = scoreImpl(fr, adaptFr, destination_key); // Score
+    Frame output = predictScoreImpl(fr, adaptFr, destination_key); // Score
     cleanup_adapt( adaptFr, fr );
     return output;
   }

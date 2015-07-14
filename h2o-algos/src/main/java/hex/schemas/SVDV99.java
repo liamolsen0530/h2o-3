@@ -25,7 +25,6 @@ public class SVDV99 extends ModelBuilderSchema<SVD,SVDV99,SVDV99.SVDParametersV9
 				"use_all_factor_levels"
 		};
 
-
     @API(help = "Transformation of training data", values = { "NONE", "STANDARDIZE", "NORMALIZE", "DEMEAN", "DESCALE" })  // TODO: pull out of enum class
     public DataInfo.TransformType transform;
 

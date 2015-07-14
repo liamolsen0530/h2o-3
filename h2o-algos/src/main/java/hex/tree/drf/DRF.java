@@ -1,21 +1,18 @@
 package hex.tree.drf;
 
+import hex.Distributions;
 import hex.ModelCategory;
 import hex.schemas.DRFV3;
-import hex.tree.DHistogram;
-import hex.tree.DTree;
+import hex.tree.*;
 import hex.tree.DTree.DecidedNode;
 import hex.tree.DTree.LeafNode;
 import hex.tree.DTree.UndecidedNode;
-import hex.tree.ScoreBuildHistogram;
-import hex.tree.SharedTree;
 import water.AutoBuffer;
 import water.Job;
 import water.Key;
 import water.MRTask;
 import water.fvec.Chunk;
 import water.fvec.Frame;
-import water.util.FrameUtils;
 import water.util.Log;
 import water.util.Timer;
 
@@ -48,9 +45,10 @@ public class DRF extends SharedTree<hex.tree.drf.DRFModel, hex.tree.drf.DRFModel
 
   @Override public DRFV3 schema() { return new DRFV3(); }
 
-  /** Start the DRF training Job on an F/J thread. */
-  @Override public Job<hex.tree.drf.DRFModel> trainModel() {
-    return start(new DRFDriver(), _parms._ntrees/*work for progress bar*/);
+  /** Start the DRF training Job on an F/J thread.
+   * @param work*/
+  @Override public Job<hex.tree.drf.DRFModel> trainModelImpl(long work) {
+    return start(new DRFDriver(), work);
   }
 
 
@@ -71,6 +69,8 @@ public class DRF extends SharedTree<hex.tree.drf.DRFModel, hex.tree.drf.DRFModel
       if( _parms._mtries != -1 && !(1 <= _parms._mtries && _parms._mtries < ncols))
         error("_mtries","Computed mtries should be -1 or in interval <1,#cols> but it is " + _parms._mtries);
     }
+    if (_parms._distribution != Distributions.Family.AUTO)
+      error("_distribution", "Only AUTO distribution is implemented so far.");
     if (_parms._sample_rate == 1f && _valid == null)
       error("_sample_rate", "Sample rate is 100% and no validation dataset is specified.  There are no OOB data to compute out-of-bag error estimation!");
     if (hasOffset())

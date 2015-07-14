@@ -1,5 +1,6 @@
 package hex.schemas;
 
+import hex.Distributions;
 import hex.tree.gbm.GBM;
 import hex.tree.gbm.GBMModel.GBMParameters;
 import water.api.API;
@@ -12,6 +13,8 @@ public class GBMV3 extends SharedTreeV3<GBM,GBMV3,GBMV3.GBMParametersV3> {
 				"model_id",
 				"training_frame",
 				"validation_frame",
+                "nfolds",
+                "keep_cross_validation_splits",
 				"response_column",
 				"ignored_columns",
 				"ignore_const_cols",
@@ -40,6 +43,6 @@ public class GBMV3 extends SharedTreeV3<GBM,GBMV3,GBMV3.GBMParametersV3> {
     public float learn_rate;
 
     @API(help = "Distribution function", values = { "AUTO", "bernoulli", "multinomial", "gaussian", "poisson", "gamma", "tweedie" }, gridable = true)
-    public GBMParameters.Family distribution;
+    public Distributions.Family distribution;
   }
 }

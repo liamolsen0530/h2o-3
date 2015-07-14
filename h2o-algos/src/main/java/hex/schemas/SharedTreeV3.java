@@ -8,9 +8,7 @@ import water.api.FrameV3.ColSpecifierV3;
 public class SharedTreeV3<B extends SharedTree, S extends SharedTreeV3<B,S,P>, P extends SharedTreeV3.SharedTreeParametersV3> extends ModelBuilderSchema<B,S,P> {
 
   public static class SharedTreeParametersV3<P extends SharedTreeParameters, S extends SharedTreeParametersV3<P, S>> extends ModelParametersSchema<P, S> {
-
     // supervised Schema
-
     // TODO: pass these as a new helper class that contains frame and vec; right now we have no automagic way to
     // know which frame a Vec name corresponds to, so there's hardwired logic in the adaptor which knows that these
     // column names are related to training_frame.
@@ -57,9 +55,6 @@ public class SharedTreeV3<B extends SharedTree, S extends SharedTreeV3<B,S,P>, P
      */
     @API(help = "Max. number (top K) of predictions to use for hit ratio computation (for multi-class only, 0 to disable)", level = API.Level.secondary, direction=API.Direction.INOUT)
     public int max_hit_ratio_k;
-
-    //
-
 
     @API(help="Number of trees.", gridable = true)
     public int ntrees;

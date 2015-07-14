@@ -1753,12 +1753,8 @@ as.data.frame.H2OFrame <- function(x, ...) {
   # Versions of R including 3.1 and later should use hex string.
   use_hex_string <- getRversion() >= "3.1"
 
-  url <- paste0('http://', x@conn@ip, ':', x@conn@port,
-                '/3/DownloadDataset',
-                '?frame_id=', URLencode(x@frame_id),
-                '&hex_string=', as.numeric(use_hex_string))
-
-  ttt <- getURL(url)
+  urlSuffix = sprintf("DownloadDataset?frame_id=%s&hex_string=%d", URLencode(x@frame_id), as.numeric(use_hex_string))
+  ttt <- .h2o.doSafeGET(x@conn, urlSuffix = urlSuffix)
   n <- nchar(ttt)
 
   # Delete last 1 or 2 characters if it's a newline.
@@ -2711,8 +2707,8 @@ h2o.hist <- function(x, breaks="Sturges", plot=TRUE) {
     if( breaks=="Scott"   ) breaks <- "scott"
   }
   h <- as.data.frame(.h2o.nary_frame_op("hist", x, breaks))
-  counts <- na.omit(h[,2])
-  mids <- na.omit(h[,4])
+  counts <- stats::na.omit(h[,2])
+  mids <- stats::na.omit(h[,4])
   histo <- list()
   histo$breaks <- h$breaks
   histo$counts <- as.numeric(counts)
